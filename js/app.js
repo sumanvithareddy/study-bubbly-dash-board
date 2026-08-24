@@ -1,112 +1,211 @@
-// Display Current Date
-
-const dateElement = document.getElementById("date");
-
-const today = new Date();
-
-const options = {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric"
-};
-
-dateElement.textContent = today.toLocaleDateString(
-    "en-US",
-    options
-);
+// ================================
+// STUDY BUDDY APP
+// Screen Navigation + App Controls
+// ================================
 
 
-// Motivational Quotes
+// Current selected activity
+let selectedActivity = "Study";
 
-const quotes = [
-    "Success is the sum of small efforts repeated every day.",
-    "Believe you can and you're halfway there.",
-    "The secret of getting ahead is getting started.",
-    "Don't watch the clock; do what it does. Keep going.",
-    "Dream big, work hard, stay focused.",
-    "Small progress is still progress.",
-    "Your future is created by what you do today."
-];
-
-const quoteElement = document.getElementById("quote");
-
-const randomQuote =
-    quotes[Math.floor(Math.random() * quotes.length)];
-
-quoteElement.textContent = `"${randomQuote}"`;
+// Current selected study time
+let selectedMinutes = 25;
 
 
-// Dark Mode
+// --------------------------------
+// SHOW SCREEN
+// --------------------------------
 
-const themeToggle = document.getElementById("themeToggle");
+function showScreen(screenId) {
 
-// Check saved theme
+    const screens = document.querySelectorAll(".screen");
 
-if (localStorage.getItem("theme") === "dark") {
-    document.body.classList.add("dark");
-    themeToggle.textContent = "☀️ Light Mode";
+    screens.forEach((screen) => {
+        screen.classList.remove("active");
+    });
+
+    const selectedScreen =
+        document.getElementById(screenId);
+
+    selectedScreen.classList.add("active");
+
+    window.scrollTo(0, 0);
 }
 
-themeToggle.addEventListener("click", () => {
 
-    document.body.classList.toggle("dark");
+// --------------------------------
+// ACTIVITY SELECTION
+// --------------------------------
 
-    if (document.body.classList.contains("dark")) {
+const activityButtons =
+    document.querySelectorAll(".activity-btn");
 
-        localStorage.setItem("theme", "dark");
+activityButtons.forEach((button) => {
 
-        themeToggle.textContent = "☀️ Light Mode";
+    button.addEventListener("click", () => {
 
-    } else {
+        activityButtons.forEach((btn) => {
+            btn.classList.remove("selected");
+        });
 
-        localStorage.setItem("theme", "light");
+        button.classList.add("selected");
 
-        themeToggle.textContent = "🌙 Dark Mode";
-    }
+        selectedActivity =
+            button.dataset.activity;
+
+    });
 
 });
 
 
-// Update Dashboard Statistics
+// --------------------------------
+// TIME SELECTION
+// --------------------------------
 
-function updateDashboard() {
+const timeButtons =
+    document.querySelectorAll(".time-btn");
 
-    const tasks =
-        JSON.parse(localStorage.getItem("tasks")) || [];
-
-    const goals =
-        JSON.parse(localStorage.getItem("goals")) || [];
-
-    const sessions =
-        parseInt(localStorage.getItem("sessions")) || 0;
+const selectedTimeDisplay =
+    document.getElementById("selectedTime");
 
 
-    // Completed Tasks
+timeButtons.forEach((button) => {
 
-    const completedTasks =
-        tasks.filter(task => task.completed).length;
+    button.addEventListener("click", () => {
 
-    document.getElementById("taskCount").textContent =
-        completedTasks;
+        timeButtons.forEach((btn) => {
+            btn.classList.remove("active-time");
+        });
+
+        button.classList.add("active-time");
+
+        selectedMinutes =
+            parseInt(button.dataset.time);
+
+        selectedTimeDisplay.textContent =
+            selectedMinutes;
+
+    });
+
+});
 
 
-    // Completed Goals
+// --------------------------------
+// UPDATE ACTIVITY DISPLAY
+// --------------------------------
 
-    const completedGoals =
-        goals.filter(goal => goal.completed).length;
+function updateActivityDisplay() {
 
-    document.getElementById("goalCount").textContent =
-        completedGoals;
+    const activityIcons = {
+
+        Study: "📖",
+        Assignment: "📝",
+        Revision: "🧠"
+
+    };
+
+    const icon =
+        activityIcons[selectedActivity];
+
+    document.getElementById(
+        "currentActivity"
+    ).textContent =
+        `${icon} ${selectedActivity} Session`;
 
 
-    // Study Sessions
+    document.getElementById(
+        "homeActivity"
+    ).textContent =
+        selectedActivity;
 
-    document.getElementById("sessionCount").textContent =
-        sessions;
 }
 
 
-// Run when page loads
+// --------------------------------
+// START FOCUS SESSION
+// --------------------------------
 
-updateDashboard();
+function startFocusSession() {
+
+    updateActivityDisplay();
+
+    // Set timer values
+    time =
+        selectedMinutes * 60;
+
+    totalTime =
+        selectedMinutes * 60;
+
+    updateTimerDisplay();
+
+    // Reset progress circle
+    updateProgressCircle();
+
+    // Open focus screen
+    showScreen("focusScreen");
+
+    // Start timer automatically
+    startTimer();
+
+}
+
+
+// --------------------------------
+// NAVIGATION ACTIVE STATE
+// --------------------------------
+
+const navItems =
+    document.querySelectorAll(".nav-item");
+
+navItems.forEach((item) => {
+
+    item.addEventListener("click", () => {
+
+        navItems.forEach((nav) => {
+            nav.classList.remove("active-nav");
+        });
+
+        item.classList.add("active-nav");
+
+    });
+
+});
+
+
+// --------------------------------
+// LOAD SAVED PROGRESS
+// --------------------------------
+
+function loadProgress() {
+
+    const savedMinutes =
+        parseInt(
+            localStorage.getItem(
+                "studyBuddyMinutes"
+            )
+        ) || 0;
+
+
+    const savedSessions =
+        parseInt(
+            localStorage.getItem(
+                "studyBuddySessions"
+            )
+        ) || 0;
+
+
+    document.getElementById(
+        "totalMinutes"
+    ).textContent =
+        savedMinutes;
+
+
+    document.getElementById(
+        "sessionCount"
+    ).textContent =
+        savedSessions;
+
+}
+
+
+// Load dashboard data
+loadProgress();
