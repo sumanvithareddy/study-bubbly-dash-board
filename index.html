@@ -4,173 +4,422 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Study Buddy Dashboard</title>
+    <title>Study Buddy</title>
 
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
-    <!-- Sidebar -->
-    <aside class="sidebar">
-        <div class="logo">
-            <h2>📚 StudyBuddy</h2>
-        </div>
+    <div class="app">
 
-        <nav>
-            <a href="#dashboard">🏠 Dashboard</a>
-            <a href="#tasks">✅ Tasks</a>
-            <a href="#timer">⏱️ Study Timer</a>
-            <a href="#notes">📝 Notes</a>
-            <a href="#goals">🎯 Goals</a>
-        </nav>
+        <!-- WELCOME SCREEN -->
+        <section class="screen active" id="welcomeScreen">
 
-        <button id="themeToggle">🌙 Dark Mode</button>
-    </aside>
+            <div class="welcome-content">
+                <div class="app-icon">📚</div>
 
+                <p class="small-text">WELCOME TO</p>
 
-    <!-- Main Content -->
-    <main class="main-content">
+                <h1>Study<br><span>Buddy.</span></h1>
 
-        <!-- Dashboard -->
-        <section id="dashboard" class="section">
-            <h1>Welcome to Study Buddy 👋</h1>
-
-            <p id="date"></p>
-
-            <div class="quote-card">
-                <h3>💡 Daily Motivation</h3>
-                <p id="quote">
-                    "Success is the sum of small efforts repeated every day."
+                <p class="welcome-text">
+                    Your personal space to focus,
+                    learn and achieve more.
                 </p>
+
+                <button class="main-btn" onclick="showScreen('activityScreen')">
+                    Continue <span>→</span>
+                </button>
             </div>
 
-            <!-- Statistics -->
-            <div class="stats-container">
-
-                <div class="stat-card">
-                    <h3 id="taskCount">0</h3>
-                    <p>Tasks Completed</p>
-                </div>
-
-                <div class="stat-card">
-                    <h3 id="goalCount">0</h3>
-                    <p>Goals Completed</p>
-                </div>
-
-                <div class="stat-card">
-                    <h3 id="sessionCount">0</h3>
-                    <p>Study Sessions</p>
-                </div>
-
-            </div>
-        </section>
-
-
-        <!-- Tasks -->
-        <section id="tasks" class="section">
-
-            <h2>✅ My Tasks</h2>
-
-            <div class="input-container">
-                <input
-                    type="text"
-                    id="taskInput"
-                    placeholder="Enter a new task..."
-                >
-
-                <button id="addTaskBtn">Add Task</button>
-            </div>
-
-            <ul id="taskList"></ul>
+            <div class="welcome-decoration decoration-1"></div>
+            <div class="welcome-decoration decoration-2"></div>
 
         </section>
 
 
-        <!-- Study Timer -->
-        <section id="timer" class="section">
+        <!-- ACTIVITY SCREEN -->
+        <section class="screen" id="activityScreen">
 
-            <h2>⏱️ Study Timer</h2>
+            <div class="screen-header">
+                <button class="back-btn"
+                    onclick="showScreen('welcomeScreen')">
+                    ←
+                </button>
 
-            <div class="timer-container">
+                <span>STEP 1 OF 3</span>
+            </div>
 
-                <div id="timerDisplay">
-                    25:00
+            <div class="screen-content">
+
+                <p class="small-text">LET'S BEGIN</p>
+
+                <h2>What are you<br>doing today?</h2>
+
+                <p class="description">
+                    Choose an activity for your focus session.
+                </p>
+
+
+                <div class="activity-list">
+
+                    <button class="activity-btn selected"
+                        data-activity="Study">
+                        <span class="activity-icon">📖</span>
+
+                        <span>
+                            <strong>Study</strong>
+                            <small>Focus on your subjects</small>
+                        </span>
+
+                        <b>✓</b>
+                    </button>
+
+
+                    <button class="activity-btn"
+                        data-activity="Assignment">
+                        <span class="activity-icon">📝</span>
+
+                        <span>
+                            <strong>Assignment</strong>
+                            <small>Complete your work</small>
+                        </span>
+
+                        <b>✓</b>
+                    </button>
+
+
+                    <button class="activity-btn"
+                        data-activity="Revision">
+                        <span class="activity-icon">🧠</span>
+
+                        <span>
+                            <strong>Revision</strong>
+                            <small>Review what you learned</small>
+                        </span>
+
+                        <b>✓</b>
+                    </button>
+
                 </div>
 
-                <div class="timer-buttons">
-                    <button id="startTimer">Start</button>
-                    <button id="pauseTimer">Pause</button>
-                    <button id="resetTimer">Reset</button>
-                </div>
+            </div>
 
+            <div class="bottom-action">
+                <button class="main-btn"
+                    onclick="showScreen('timeScreen')">
+                    Next <span>→</span>
+                </button>
             </div>
 
         </section>
 
 
-        <!-- Notes -->
-        <section id="notes" class="section">
+        <!-- TIME SCREEN -->
+        <section class="screen" id="timeScreen">
 
-            <h2>📝 My Notes</h2>
+            <div class="screen-header">
+                <button class="back-btn"
+                    onclick="showScreen('activityScreen')">
+                    ←
+                </button>
 
-            <textarea
-                id="noteInput"
-                placeholder="Write your study notes here..."
-            ></textarea>
+                <span>STEP 2 OF 3</span>
+            </div>
 
-            <br>
 
-            <button id="saveNoteBtn">
-                Save Note
-            </button>
+            <div class="screen-content center-content">
 
-            <div id="notesContainer"></div>
+                <p class="small-text">FOCUS SESSION</p>
+
+                <h2>How long do you<br>want to focus?</h2>
+
+
+                <div class="time-display">
+                    <span id="selectedTime">25</span>
+                    <small>MINUTES</small>
+                </div>
+
+
+                <div class="time-options">
+
+                    <button class="time-btn" data-time="15">
+                        15
+                    </button>
+
+                    <button class="time-btn active-time"
+                        data-time="25">
+                        25
+                    </button>
+
+                    <button class="time-btn" data-time="45">
+                        45
+                    </button>
+
+                    <button class="time-btn" data-time="60">
+                        60
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="bottom-action">
+                <button class="main-btn"
+                    onclick="startFocusSession()">
+                    Start Focus 🔥
+                </button>
+            </div>
 
         </section>
 
 
-        <!-- Goals -->
-        <section id="goals" class="section">
+        <!-- FOCUS SCREEN -->
+        <section class="screen" id="focusScreen">
 
-            <h2>🎯 Daily Goals</h2>
+            <div class="focus-header">
 
-            <div class="input-container">
+                <span id="currentActivity">
+                    📖 Study Session
+                </span>
 
-                <input
-                    type="text"
-                    id="goalInput"
-                    placeholder="Enter your daily goal..."
-                >
-
-                <button id="addGoalBtn">
-                    Add Goal
+                <button class="close-btn"
+                    onclick="finishSession()">
+                    ✕
                 </button>
 
             </div>
 
-            <ul id="goalList"></ul>
 
-            <div class="progress-container">
-                <div id="progressBar"></div>
+            <div class="focus-content">
+
+                <div class="progress-ring">
+
+                    <svg width="280" height="280">
+
+                        <circle
+                            cx="140"
+                            cy="140"
+                            r="120"
+                            class="progress-bg"
+                        ></circle>
+
+                        <circle
+                            cx="140"
+                            cy="140"
+                            r="120"
+                            class="progress"
+                            id="progressCircle"
+                        ></circle>
+
+                    </svg>
+
+
+                    <div class="timer-text">
+
+                        <h1 id="timerDisplay">
+                            25:00
+                        </h1>
+
+                        <p>Stay focused ✨</p>
+
+                    </div>
+
+                </div>
+
+
+                <p class="focus-message">
+                    One step closer to your goal.
+                </p>
+
             </div>
 
-            <p id="progressText">
-                0% Completed
-            </p>
+
+            <div class="focus-controls">
+
+                <button class="control-btn"
+                    id="pauseBtn"
+                    onclick="pauseTimer()">
+                    ⏸
+                </button>
+
+                <button class="stop-btn"
+                    onclick="finishSession()">
+                    Finish
+                </button>
+
+            </div>
 
         </section>
 
-    </main>
+
+        <!-- COMPLETE SCREEN -->
+        <section class="screen" id="completeScreen">
+
+            <div class="complete-content">
+
+                <div class="success-icon">
+                    🎉
+                </div>
+
+                <p class="small-text">
+                    SESSION COMPLETE
+                </p>
+
+                <h2>Great job!</h2>
+
+                <p>
+                    You completed your
+                    focus session successfully.
+                </p>
 
 
-    <!-- JavaScript Files -->
+                <div class="session-info">
+
+                    <div>
+                        <strong id="completedMinutes">
+                            25
+                        </strong>
+
+                        <span>Minutes</span>
+                    </div>
+
+
+                    <div>
+                        <strong id="completedActivity">
+                            Study
+                        </strong>
+
+                        <span>Activity</span>
+                    </div>
+
+                </div>
+
+
+                <button class="main-btn"
+                    onclick="showScreen('homeScreen')">
+                    Go to Dashboard →
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- HOME DASHBOARD -->
+        <section class="screen" id="homeScreen">
+
+            <div class="home-header">
+
+                <div>
+                    <p>Good evening 👋</p>
+                    <h2>Ready to learn?</h2>
+                </div>
+
+                <div class="profile-circle">
+                    S
+                </div>
+
+            </div>
+
+
+            <div class="home-content">
+
+                <div class="today-card">
+
+                    <p>🔥 TODAY'S FOCUS</p>
+
+                    <h2 id="homeActivity">
+                        Study
+                    </h2>
+
+                    <p>
+                        Keep moving towards your goals.
+                    </p>
+
+                    <button onclick="showScreen('activityScreen')">
+                        Start Session →
+                    </button>
+
+                </div>
+
+
+                <h3>Your Progress</h3>
+
+
+                <div class="progress-stats">
+
+                    <div class="mini-stat">
+                        <span>⏱️</span>
+
+                        <div>
+                            <strong id="totalMinutes">
+                                0
+                            </strong>
+
+                            <small>Minutes</small>
+                        </div>
+                    </div>
+
+
+                    <div class="mini-stat">
+                        <span>🔥</span>
+
+                        <div>
+                            <strong id="sessionCount">
+                                0
+                            </strong>
+
+                            <small>Sessions</small>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- BOTTOM NAVIGATION -->
+
+            <nav class="bottom-nav">
+
+                <button class="nav-item active-nav"
+                    onclick="showScreen('homeScreen')">
+                    <span>⌂</span>
+                    <small>Home</small>
+                </button>
+
+
+                <button class="nav-item"
+                    onclick="showScreen('activityScreen')">
+                    <span>⏱</span>
+                    <small>Focus</small>
+                </button>
+
+
+                <button class="nav-item">
+                    <span>📊</span>
+                    <small>Progress</small>
+                </button>
+
+
+                <button class="nav-item">
+                    <span>⚙</span>
+                    <small>Settings</small>
+                </button>
+
+            </nav>
+
+        </section>
+
+    </div>
+
 
     <script src="js/app.js"></script>
-    <script src="js/tasks.js"></script>
     <script src="js/timer.js"></script>
-    <script src="js/notes.js"></script>
-    <script src="js/goals.js"></script>
 
 </body>
 </html>
+               
